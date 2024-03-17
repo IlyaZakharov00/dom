@@ -1,16 +1,13 @@
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("загружено");
+export default class Game {
+  constructor() {}
 
-  let count = document.querySelector(".counter"); // поиск счетчика
-  count.textContent = 0; //установка счетчика на 0
-
-  function getRandomId() {
+  getRandomId() {
     const allSquares = document.querySelectorAll(".square"); // поиск всех элементов square
     const randomNum = Math.ceil(Math.random() * allSquares.length); // вычисление рандомного индекса
     return randomNum;
   }
 
-  function searchGoblin() {
+  searchGoblin() {
     let elements = document.querySelectorAll(".square"); // поиск элемента с таким индексом
     for (const elem of elements) {
       if (
@@ -22,19 +19,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function deleteGoblin(id) {
+  deleteGoblin(id) {
     let goblinSquare = document.getElementById(id); //поиск ячейки с гоблином
     goblinSquare.firstElementChild.remove(); // удаление гоблина
   }
 
-  function createGoblin() {
-    let id = searchGoblin(); // поиск имеющегося гоблина
-    if (id) deleteGoblin(id); //удаление имеющего гоблина
+  createGoblin() {
+    let id = this.searchGoblin(); // поиск имеющегося гоблина
+    if (id) this.deleteGoblin(id); //удаление имеющего гоблина
 
-    let randomNum = getRandomId(); // получение рандомного индекса
+    let randomNum = this.getRandomId(); // получение рандомного индекса
     let element = document.getElementById(randomNum); // поиск элемента с таким индексом
     do {
-      randomNum = getRandomId();
+      randomNum = this.getRandomId();
       element = document.getElementById(randomNum);
     } while (id == element.id);
     let goblin = document.createElement("div"); // создание нового гоблина
@@ -53,12 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function moveGoblin() {
-    createGoblin();
+  moveGoblin() {
+    this.createGoblin();
   }
-
-  let timer = setInterval(() => {
-    moveGoblin();
-    console.log(timer);
-  }, 1000);
-});
+}
