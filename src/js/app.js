@@ -1,22 +1,20 @@
 export default class Game {
-  constructor() {}
+  constructor() {
+    this.clickedOnGoblin = null;
+    this.goblin = null;
+    this.lose = false;
+    this.stop = false;
+    this.timer;
+  }
 
   getRandomId() {
     const allSquares = document.querySelectorAll(".square"); // поиск всех элементов square
     const randomNum = Math.ceil(Math.random() * allSquares.length); // вычисление рандомного индекса
-    return randomNum;
+    return randomNum; //возвращаем рандомное число
   }
 
   searchGoblin() {
-    let elements = document.querySelectorAll(".square"); // поиск элемента с таким индексом
-    for (const elem of elements) {
-      if (
-        elem.firstElementChild &&
-        elem.firstElementChild.classList.contains("goblin")
-      ) {
-        return elem.id; // возвращаем id элемента
-      }
-    }
+    if (this.goblin) return this.goblin.parentElement.id; //если есть гоблин то возвращаем id у родителя
   }
 
   deleteGoblin(id) {
@@ -25,28 +23,54 @@ export default class Game {
   }
 
   createGoblin() {
+    let message = document.querySelector(".message-link");
+    message.classList.add("hidden");
+
+    if (this.goblin) {
+      // если есть гоблин записываем что клика не было
+      this.clickedOnGoblin = false;
+    }
+
     let id = this.searchGoblin(); // поиск имеющегося гоблина
-    if (id) this.deleteGoblin(id); //удаление имеющего гоблина
+    if (id) this.deleteGoblin(id); // удаление имеющегося гоблина
 
     let randomNum = this.getRandomId(); // получение рандомного индекса
     let element = document.getElementById(randomNum); // поиск элемента с таким индексом
+
     do {
+      // ищем рандомное число до тех пор пока оно совпадает с предыдущем id
       randomNum = this.getRandomId();
       element = document.getElementById(randomNum);
     } while (id == element.id);
-    let goblin = document.createElement("div"); // создание нового гоблина
-    goblin.classList.add("goblin"); // добавляем класс новому голбину
-    element.appendChild(goblin); //добавляем в ячейку нового гоблина
 
-    goblin.addEventListener("click", () => {
-      let count = document.querySelector(".counter"); // поиск счетчика
+    this.goblin = document.createElement("div"); // создание нового гоблина
+    this.goblin.classList.add("goblin"); // добавляем класс новому голбину
+    element.appendChild(this.goblin); //добавляем в ячейку нового гоблина
+
+    if (this.clickedOnGoblin == false) {
+      //если не было клика по гоблину
+      let count = document.querySelector(".counter-false"); // поиск счетчика
       count.textContent++; // добавление 1 к счетчику
-    });
+      if (count.textContent == 5) {
+        clearInterval(this.timer);
+        this.lose = true;
+        alert("Вы проиграли! Начните новую игру.");
+      }
+    }
 
-    let btnRst = document.querySelector(".button-reset");
-    btnRst.addEventListener("click", () => {
-      let count = document.querySelector(".counter"); // поиск счетчика
-      count.textContent = 0; // обнуление счетчика
+    this.goblin.addEventListener("click", () => {
+      if (this.lose) {
+        return;
+      }
+      if (!this.stop) {
+        // если был клик по гоблину
+        this.clickedOnGoblin = true;
+        let count = document.querySelector(".counter-click"); // поиск счетчика
+        count.textContent++; // добавление 1 к счетчику
+        let id = this.searchGoblin(); // поиск имеющегося гоблина
+        this.deleteGoblin(id); // удаление имеющегося гоблина
+        this.goblin = false; // нет гоблина
+      }
     });
   }
 

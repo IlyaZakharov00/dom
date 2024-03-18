@@ -10,9 +10,19 @@
 
 <body>
     <div class="count-container">
-        <div class="count-name">Всего кликов:</div>
-        <div class='counter'></div>
-        <button class='button-reset' type="reset">Сбросить счетчик</button>
+        <div class="container-click">
+            <div class="count-click">Гоблинов поймано:</div>
+            <div class='counter-click'></div>
+        </div>
+        <div class="container-false">
+            <div class="count-false">Гоблинов пропущено:</div>
+            <div class='counter-false'></div>
+        </div>
+        <div class="container-btn">
+            <button class='btn btn-new-game' type="button">Новая игра</button>
+            <button class='btn btn-stop-game' type="button">Остановить игру</button>
+            <button class='btn btn-continue' type="button">Продолжить игру</button>
+        </div>
     </div>
     <div class="container">
         <div class="square" id='1'></div>
@@ -32,6 +42,9 @@
         <div class="square" id='15'></div>
         <div class="square" id='16'></div>
     </div>
+    <a href="#" class="message-link hidden">
+        <div class="message">СООБЩЕНИЕ</div>
+    </a>
 </body>
 
 </html>
