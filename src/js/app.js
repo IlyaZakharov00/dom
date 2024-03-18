@@ -23,6 +23,7 @@ export default class Game {
   }
 
   createGoblin() {
+    this.lose = false;
     let message = document.querySelector(".message-link");
     message.classList.add("hidden");
 
