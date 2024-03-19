@@ -6,6 +6,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const newGame = new Game(); // создание новой игры
 
+  let inputSquare = document.querySelector(".input-text"); // поиск формы
+
+  let inputSubmit = document.querySelector(".input-submit"); // поиск кнопки отправки формы
+  inputSubmit.addEventListener("click", (e) => {
+    //отслеживаем нажатие на отправку
+    e.preventDefault();
+    if (newGame.field) {
+      //если генерация поля уже была ранее
+      let container = document.querySelector(".container"); // ищем контейнер
+      container.remove(); // удаляем его
+    }
+    newGame.generateSquare(inputSquare.value); // генерация поля
+  });
+
   let message = document.querySelector(".message-link"); // сообщение
 
   message.addEventListener("click", (e) => {

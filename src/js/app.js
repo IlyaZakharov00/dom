@@ -5,6 +5,25 @@ export default class Game {
     this.lose = false;
     this.stop = false;
     this.timer;
+    this.field = null;
+  }
+
+  generateSquare(number) {
+    if (number <= 1 || !Number.isInteger(Number(number))) {
+      return alert(
+        "Невозможно отрисовать поле! Пожалуйста, введите другое число."
+      );
+    }
+
+    let container = document.createElement("div"); // создание div
+    let countContiner = document.querySelector(".count-container"); // поиск контейнера с кнопками
+    countContiner.after(container); // вставка контейнера после кнопок
+    container.classList.add("container"); // добавление контейнеру класса
+    for (let i = 1; i <= number ** 2; i++) {
+      let example = `<div class="square" id=${i}></div>`; // шаблон строки
+      container.insertAdjacentHTML("beforeend", example); //добавление в контейнер ячейки
+    }
+    this.field = true;
   }
 
   getRandomId() {

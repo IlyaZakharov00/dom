@@ -123,3 +123,33 @@
     width: 100%;
     height: 100%;
 }
+
+.countSquare {
+    position: absolute;
+    text-align: left;
+    margin-left: 50px;
+    padding-top: 49px;
+}
+
+.input-submit {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    background-color: blueviolet;
+}
+
+.input-text {
+    padding: 10px;
+    background-color: blueviolet;
+    color: white;
+}
+
+.input-submit:hover {
+    margin-top: 10px;
+    opacity: 0.9;
+}
+
+.input-submit:active {
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, .5);
+}
